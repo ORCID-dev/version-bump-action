@@ -25,6 +25,9 @@ runs:
       shell: bash
 
     - id: version
-      run: version-bump.sh --tag "${{ inputs.version_tag }}"
+      run: version-bump.sh
       shell: bash
+      # handle when empty input is provided
+      env:
+        GHA_TAG: ${{ inputs.version_tag }}
 
