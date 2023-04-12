@@ -87,7 +87,7 @@ if [[ "$tag" != 'next_tag' ]];then
 
   tag_numeric="$(echo $tag | tr -dc '[:digit:].')"
   echo "tag numeric: $tag_numeric"
-  echo "version_tag_numeric=${tag_numeric}" >> "$GITHUB_OUTPUT"
+  echo "version_tag_n=${tag_numeric}" >> "$GITHUB_OUTPUT"
 
   echo "version_tag=${tag}" >> "$GITHUB_OUTPUT"
   exit

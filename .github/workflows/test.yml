@@ -49,7 +49,7 @@ jobs:
 
         shell: bash
         env:
-          version_tag_test: "${{ steps.version.outputs.version_tag_numeric }}"
+          version_tag_test: "${{ steps.version.outputs.version_tag_n }}"
           version_tag: "${{ steps.version.outputs.version_tag }}"
 
 
