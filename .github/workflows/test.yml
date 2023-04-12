@@ -41,7 +41,7 @@ jobs:
 
       - name: test if bumping vars are right
         run: |
-          if [[ "$version_tag_numeric" == '2.0.1' ]];then
+          if [[ "$version_tag_test" == '2.0.1' ]];then
             echo "winning"
           else
             exit 1
@@ -49,6 +49,6 @@ jobs:
 
         shell: bash
         env:
-          version_tag_numeric: "${{ steps.version.outputs.version_tag_numeric }}"
+          version_tag_test: "${{ steps.version.outputs.version_tag_numeric }}"
 
 
