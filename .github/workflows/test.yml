@@ -18,11 +18,11 @@ jobs:
           git diff
           ls -la .
 
-      - name: find next version
+      - name: keep version as it has been manually provided
         id: version
         uses: ORCID-dev/version-bump-action@main
         with:
-          version_tag: v2.0.0
+          version_tag: v2.0.1
 
       - name: test if keeping vars are right
         run: |
@@ -37,7 +37,7 @@ jobs:
           version_tag_numeric: ${{ steps.version.outputs.version_tag_numeric }}
           version_tag: ${{ steps.version.outputs.version_tag }}
 
-      - name: find next version
+      - name: find next version by bumping tag
         id: version_bumped
         uses: ORCID-dev/version-bump-action@main
         with:
