@@ -33,6 +33,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: check some build related things
+        run: |
+          git --version
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+          git status
+          git diff
+          ls -la .
+
 #       - name: find next version
 #         id: version
 #         uses: ORCID-dev/version-bump-action@main
