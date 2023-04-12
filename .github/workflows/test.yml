@@ -42,18 +42,18 @@ jobs:
           git diff
           ls -la .
 
-#       - name: find next version
-#         id: version
-#         uses: ORCID-dev/version-bump-action@main
-#         with:
-#           version_tag: ${{ inputs.version_tag }}
-
-      - name: bump version
+      - name: find next version
         id: version
-        run: |
-          ./version-bump.sh --tag ${{ inputs.version_tag }}
-        shell: bash
+        uses: ORCID-dev/version-bump-action@main
+        with:
+          version_tag: ${{ inputs.version_tag }}
 
+#       - name: bump version
+#         id: version
+#         run: |
+#           ./version-bump.sh --tag ${{ inputs.version_tag }}
+#         shell: bash
+# 
       - name: test if bumping vars are right
         run: |
           if [[ "$version_tag_numeric" == '2.0.1' ]];then
