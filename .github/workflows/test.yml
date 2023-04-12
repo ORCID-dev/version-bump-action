@@ -16,6 +16,7 @@ on:
         required: false
         default: "v2.0.1"
         type: string
+  commit:
 
 jobs:
   test:
