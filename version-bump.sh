@@ -85,6 +85,9 @@ GITHUB_OUTPUT=${GITHUB_OUTPUT:-/tmp/$NAME.$USER}
 if [[ "$tag" != 'next_tag' ]];then
   echo "tag specified: $tag"
   echo "version_tag=${tag}" >> "$GITHUB_OUTPUT"
+  tag_numeric="$(echo $tag | tr -dc '[:digit:].')"
+  echo "tag numeric: $tag_numeric"
+  echo "version_tag_numeric=${tag_numeric}" >> "$GITHUB_OUTPUT"
   exit
 fi
 
@@ -160,8 +163,8 @@ else
 
 fi
 
-new_tag_no_v=$(echo $new_tag | tr -d 'v')
+new_tag_numeric="$(echo $new_tag | tr -dc '[:digit:].')"
 
 echo "version_tag=${new_tag}" >> "$GITHUB_OUTPUT" 2>/dev/null
-echo "version_tag_no_v=${new_tag_no_v}" >> "$GITHUB_OUTPUT" 2>/dev/null
+echo "version_tag_numeric=${new_tag_numeric}" >> "$GITHUB_OUTPUT" 2>/dev/null
 
