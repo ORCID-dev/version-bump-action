@@ -51,7 +51,7 @@ jobs:
       - name: bump version
         id: version
         run: |
-          ./version_bump.sh ${{ inputs.version_tag }}
+          ./version-bump.sh --tag ${{ inputs.version_tag }}
         shell: bash
 
       - name: test if bumping vars are right
