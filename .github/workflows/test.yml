@@ -51,5 +51,6 @@ jobs:
         env:
           version_tag_test: "${{ steps.version.outputs.version_tag_n }}"
           version_tag: "${{ steps.version.outputs.version_tag }}"
+          wibble: "${{ steps.version.outputs.wibble }}"
 
 
