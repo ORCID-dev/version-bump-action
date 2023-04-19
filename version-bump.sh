@@ -108,6 +108,7 @@ vnum2=${version_bits[1]}
 vnum3=${version_bits[2]}
 vnum1=`echo $vnum1 | sed 's/v//'`
 
+# Allow git commit messages to override bump value
 # Check for #major or #minor in commit message and increment the relevant version number
 if git log --format=%B -n 1 HEAD | grep -q '#major';then
   echo "major git commit detected"
@@ -122,6 +123,8 @@ if git log --format=%B -n 1 HEAD | grep '#patch';then
   patch=1
 fi
 
+# take bumping from arguments
+
 if [[ "$bump" = 'major' ]];then
   major=1
 fi
@@ -131,6 +134,13 @@ fi
 if [[ "$bump" = 'patch' ]];then
   patch=1
 fi
+
+
+
+
+#
+# perform version bumping
+#
 
 if [[ "$major" -eq 1 ]]; then
     echo "Update major version"
