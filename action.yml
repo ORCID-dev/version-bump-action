@@ -10,7 +10,7 @@ inputs:
   bump:
     description: 'bump setting'
     required: false
-    default: "none"
+    default: "gitlog"
     type: string
 
 

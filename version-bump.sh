@@ -17,7 +17,7 @@ prefix='v'
 do_tag=0
 tag=${GHA_TAG:-latest}
 USER=$(whoami)
-bump=${GHA_BUMP:-none}
+bump=${GHA_BUMP:-gitlog}
 major=0
 minor=0
 patch=0
@@ -110,17 +110,19 @@ vnum1=`echo $vnum1 | sed 's/v//'`
 
 # Allow git commit messages to override bump value
 # Check for #major or #minor in commit message and increment the relevant version number
-if git log --format=%B -n 1 HEAD | grep -q '#major';then
-  echo "major git commit detected"
-  major=1
-fi
-if git log --format=%B -n 1 HEAD | grep '#minor';then
-  echo "minor git commit detected"
-  minor=1
-fi
-if git log --format=%B -n 1 HEAD | grep '#patch';then
-  echo "patch git commit detected"
-  patch=1
+if [[ "$bump" = 'gitlog' ]];then
+  if git log --format=%B -n 1 HEAD | grep -q '#major';then
+    echo "major git commit detected"
+    major=1
+  fi
+  if git log --format=%B -n 1 HEAD | grep -q '#minor';then
+    echo "minor git commit detected"
+    minor=1
+  fi
+  if git log --format=%B -n 1 HEAD | grep -q '#patch';then
+    echo "patch git commit detected"
+    patch=1
+  fi
 fi
 
 # take bumping from arguments
