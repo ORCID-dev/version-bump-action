@@ -41,7 +41,8 @@ jobs:
         id: version_bumped
         uses: ORCID-dev/version-bump-action@main
         with:
-          version_tag: next_tag
+          version_tag: latest
+          bump: patch
 
       - name: test if bumping vars are right
         run: |
