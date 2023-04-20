@@ -120,8 +120,8 @@ if [[ "$bump" = 'gitlog' ]];then
     minor=1
   fi
 
-  if grep -qE 'fix' <<< $(echo $merge_commit);then
-    echo "fix git commit detected"
+  if grep -qE 'fix|bug|patch|test' <<< $(echo $merge_commit);then
+    echo "fix|bug|patch|test git commit detected"
     patch=1
   fi
 
