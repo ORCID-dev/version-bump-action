@@ -115,6 +115,12 @@ if [[ "$bump" = 'gitlog' ]];then
   latest_log=$(git log --format=%B -n 1 HEAD)
   merge_commit=$(echo "$latest_log" | head -n1)
 
+  echo "latest_log:"
+  echo "$latest_log"
+
+  echo "merge_commit:"
+  echo "$merge_commit"
+
   if grep -qE 'feat' <<< $(echo $merge_commit);then
     echo "feature git commit detected"
     minor=1
