@@ -58,5 +58,33 @@ jobs:
           version_tag: ${{ steps.version_bumped.outputs.version_tag }}
 
 
+      - name: test a git thing
+        run: |
+          git --version
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+          touch wibble
+          echo 'bibble' > wibble
+          git add wibble
+          git commit -m 'feat'
 
+      - name: find next version by bumping commit
+        id: version_bumped_gitlog_minor
+        run: ./version-bump.sh
+        env:
+          GHA_TAG: latest
+          GHA_BUMP: gitlog
+
+      - name: test if bumping vars are right
+        run: |
+          if [[ "$version_tag_numeric" == '0.1.0' ]];then
+            echo "winning"
+          else
+            exit 1
+          fi
+
+        shell: bash
+        env:
+          version_tag_numeric: ${{ steps.version_bumped_gitlog_minor.outputs.version_tag_numeric }}
+          version_tag: ${{ steps.version_bumped_gitlog_minor.outputs.version_tag }}
 
