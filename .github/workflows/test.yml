@@ -20,9 +20,9 @@ jobs:
 
       - name: keep version as it has been manually provided
         id: version
-        uses: ORCID-dev/version-bump-action@main
+        run: ./version-bump.sh
         with:
-          version_tag: v2.0.1
+          GHA_TAG: v2.0.1
 
       - name: test if keeping vars are right
         run: |
@@ -39,10 +39,10 @@ jobs:
 
       - name: find next version by bumping tag
         id: version_bumped
-        uses: ORCID-dev/version-bump-action@main
+        run: ./version-bump.sh
         with:
-          version_tag: latest
-          bump: patch
+          GHA_TAG: latest
+          GHA_BUMP: patch
 
       - name: test if bumping vars are right
         run: |
