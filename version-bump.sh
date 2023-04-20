@@ -85,7 +85,7 @@ GITHUB_OUTPUT=${GITHUB_OUTPUT:-/tmp/$NAME.$USER}
 #set -x
 
 # option that just returns the provided values
-if [[ "$bump" = 'none' ]] && [[ "$tag" != 'latest' ]];then
+if [[ "$bump" = 'gitlog' ]] && [[ "$tag" != 'latest' ]];then
   echo "tag specified: $tag"
   echo "version_tag=${tag}" >> "$GITHUB_OUTPUT" 2>/dev/null
   tag_numeric="$(echo $tag | tr -dc '[:digit:].')"
