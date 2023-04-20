@@ -111,18 +111,33 @@ vnum1=`echo $vnum1 | sed 's/v//'`
 # Allow git commit messages to override bump value
 # Check for #major or #minor in commit message and increment the relevant version number
 if [[ "$bump" = 'gitlog' ]];then
-  if git log --format=%B -n 1 HEAD | grep -q '#major';then
+
+  latest_log=$(git log --format=%B -n 1 HEAD)
+  merge_commit=$(echo "$latest_log" | head -n1)
+
+  if grep -qE 'feat' <<< $(echo $merge_commit);then
+    echo "feature git commit detected"
+    minor=1
+  fi
+
+  if grep -qE 'fix' <<< $(echo $merge_commit);then
+    echo "fix git commit detected"
+    patch=1
+  fi
+
+  if grep -q '#major' <<< $(echo $latest_log) ;then
     echo "major git commit detected"
     major=1
   fi
-  if git log --format=%B -n 1 HEAD | grep -q '#minor';then
+  if grep -q '#minor' <<< $(echo $latest_log) ;then
     echo "minor git commit detected"
     minor=1
   fi
-  if git log --format=%B -n 1 HEAD | grep -q '#patch';then
+  if grep -q '#patch' <<< $(echo $latest_log) ;then
     echo "patch git commit detected"
     patch=1
   fi
+
 fi
 
 # take bumping from arguments
