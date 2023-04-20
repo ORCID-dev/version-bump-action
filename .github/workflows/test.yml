@@ -21,7 +21,7 @@ jobs:
       - name: keep version as it has been manually provided
         id: version
         run: ./version-bump.sh
-        with:
+        env:
           GHA_TAG: v2.0.1
 
       - name: test if keeping vars are right
@@ -40,7 +40,7 @@ jobs:
       - name: find next version by bumping tag
         id: version_bumped
         run: ./version-bump.sh
-        with:
+        env:
           GHA_TAG: latest
           GHA_BUMP: patch
 
