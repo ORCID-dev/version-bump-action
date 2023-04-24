@@ -70,7 +70,7 @@ jobs:
           git commit -m '#major'
 
       - name: bump 0.0.1 to 1.0.0 using the '#major' commit message
-        id: version_bumped_gitlog_minor
+        id: version_bumped_gitlog_major
         run: ./version-bump.sh
         env:
           GHA_TAG: latest
@@ -84,8 +84,8 @@ jobs:
           fi
         shell: bash
         env:
-          version_tag_numeric: ${{ steps.version_bumped_gitlog_minor.outputs.version_tag_numeric }}
-          version_tag: ${{ steps.version_bumped_gitlog_minor.outputs.version_tag }}
+          version_tag_numeric: ${{ steps.version_bumped_gitlog_major.outputs.version_tag_numeric }}
+          version_tag: ${{ steps.version_bumped_gitlog_major.outputs.version_tag }}
 
 ###########################################################################################
 
