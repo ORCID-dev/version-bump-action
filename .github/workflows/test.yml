@@ -99,7 +99,7 @@ jobs:
           touch bibble
           echo 'bibble' > bibble
           git add bibble
-          git commit -m 'bibble'
+          git commit -m "Merge pull request #1932 from ORCID/feat/bibble" -m "feat/bibble"
           git checkout main
           git merge feat/bibble
 
