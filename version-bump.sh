@@ -169,7 +169,7 @@ fi
 # perform version bumping
 #
 
-if [[ "$bump != 'none' ]];then
+if [[ "$bump" != 'none' ]];then
   echo "bump !=none so performing version bump"
 
   if [[ "$major" -eq 1 ]]; then
