@@ -94,7 +94,7 @@ jobs:
           git --version
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
-          git git branch feat/wibble
+          git branch feat/wibble
           touch wibble
           echo 'bibble' > wibble
           git add wibble
