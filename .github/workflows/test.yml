@@ -94,14 +94,14 @@ jobs:
           git --version
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
-          git branch feat/wibble
-          git switch feat/wibble
-          touch wibble
-          echo 'bibble' > wibble
-          git add wibble
-          git commit -m 'wibble'
+          git branch feat/bibble
+          git switch feat/bibble
+          touch bibble
+          echo 'bibble' > bibble
+          git add bibble
+          git commit -m 'bibble'
           git checkout main
-          git merge feat/wibble
+          git merge feat/bibble
 
       - name: bump 0.0.1 to 0.1.0 due to the feat/ merge
         id: version_bumped_gitlog_minor
