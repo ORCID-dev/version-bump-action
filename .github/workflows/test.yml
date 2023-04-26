@@ -58,35 +58,7 @@ jobs:
           version_tag_numeric: ${{ steps.version_bumped.outputs.version_tag_numeric }}
           version_tag: ${{ steps.version_bumped.outputs.version_tag }}
 
-###########################################################################################
 
-      - name: commit '#major' to the local git repo (no push)
-        run: |
-          git --version
-          git config user.name "GitHub Actions Bot"
-          git config user.email "<>"
-          touch wibble
-          echo 'bibble' > wibble
-          git add wibble
-          git commit -m '#major'
-
-      - name: bump 0.0.1 to 1.0.0 using the '#major' commit message
-        id: version_bumped_gitlog_major
-        run: ./version-bump.sh
-        env:
-          GHA_TAG: latest
-
-      - name: test that major bump has happened to 1.0.0
-        run: |
-          if [[ "$version_tag_numeric" == '1.0.0' ]];then
-            echo "winning"
-          else
-            exit 1
-          fi
-        shell: bash
-        env:
-          version_tag_numeric: ${{ steps.version_bumped_gitlog_major.outputs.version_tag_numeric }}
-          version_tag: ${{ steps.version_bumped_gitlog_major.outputs.version_tag }}
 
 ###########################################################################################
 
@@ -126,4 +98,39 @@ jobs:
         env:
           version_tag_numeric: ${{ steps.version_bumped_gitlog_minor.outputs.version_tag_numeric }}
           version_tag: ${{ steps.version_bumped_gitlog_minor.outputs.version_tag }}
+
+
+
+
+###########################################################################################
+
+      - name: commit '#major' to the local git repo (no push)
+        run: |
+          git --version
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+          touch wibble
+          echo 'bibble' > wibble
+          git add wibble
+          git commit -m '#major'
+
+      - name: bump 0.0.1 to 1.0.0 using the '#major' commit message
+        id: version_bumped_gitlog_major
+        run: ./version-bump.sh
+        env:
+          GHA_TAG: latest
+
+      - name: test that major bump has happened to 1.0.0
+        run: |
+          if [[ "$version_tag_numeric" == '1.0.0' ]];then
+            echo "winning"
+          else
+            exit 1
+          fi
+        shell: bash
+        env:
+          version_tag_numeric: ${{ steps.version_bumped_gitlog_major.outputs.version_tag_numeric }}
+          version_tag: ${{ steps.version_bumped_gitlog_major.outputs.version_tag }}
+
+###########################################################################################
 
