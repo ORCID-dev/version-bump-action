@@ -99,9 +99,9 @@ jobs:
           touch bibble
           echo 'bibble' > bibble
           git add bibble
-          git commit -m "Merge pull request #1932 from ORCID/feat/bibble" -m "feat/bibble"
+          git commit -m "test"
           git checkout main
-          git merge feat/bibble
+          git merge feat/bibble -m 'bibble'
 
       - name: bump 0.0.1 to 0.1.0 due to the feat/ merge
         id: version_bumped_gitlog_minor
