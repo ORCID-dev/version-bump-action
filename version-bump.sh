@@ -137,7 +137,9 @@ merge_commit=$(git log --merges -n 1)
 
 echo "commits_since_last_tag:"
 echo "$commits_since_last_tag"
-
+echo " "
+echo "----------------------------------------------"
+echo " "
 echo "merge_commit:"
 echo "$merge_commit"
 
