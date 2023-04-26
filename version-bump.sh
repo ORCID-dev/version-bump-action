@@ -131,11 +131,11 @@ fi
 # Allow git commit messages to override bump value
 # Check for #major or #minor in commit message and increment the relevant version number
 
-latest_log=$(git log --format=%B -n 1 HEAD)
+commits_since_last_tag=$(git log $version..HEAD --oneline)
 merge_commit=$(git log --merges -n 1)
 
-echo "latest_log:"
-echo "$latest_log"
+echo "commits_since_last_tag:"
+echo "$commits_since_last_tag"
 
 echo "merge_commit:"
 echo "$merge_commit"
@@ -150,15 +150,15 @@ if grep -qE 'fix|bug|patch|test' <<< $(echo $merge_commit);then
   patch=1
 fi
 
-if grep -q '#major' <<< $(echo $latest_log) ;then
+if grep -q '#major' <<< $(echo $commits_since_last_tag) ;then
   echo "major git commit detected"
   major=1
 fi
-if grep -q '#minor' <<< $(echo $latest_log) ;then
+if grep -q '#minor' <<< $(echo $commits_since_last_tag) ;then
   echo "minor git commit detected"
   minor=1
 fi
-if grep -q '#patch' <<< $(echo $latest_log) ;then
+if grep -q '#patch' <<< $(echo $commits_since_last_tag) ;then
   echo "patch git commit detected"
   patch=1
 fi
