@@ -131,6 +131,7 @@ fi
 # Allow git commit messages to override bump value
 # Check for #major or #minor in commit message and increment the relevant version number
 
+git fetch --all
 commits_since_last_tag=$(git log $version..HEAD --oneline)
 merge_commit=$(git log --merges -n 1)
 
