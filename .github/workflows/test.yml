@@ -103,6 +103,11 @@ jobs:
           git checkout main
           git merge feat/bibble -m 'bibble'
 
+          git log
+          echo "-------------------"
+          git log --merges -n 1
+
+
       - name: bump 0.0.1 to 0.1.0 due to the feat/ merge
         id: version_bumped_gitlog_minor
         run: ./version-bump.sh
