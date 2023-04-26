@@ -101,7 +101,7 @@ jobs:
           git add merge-test
           git commit -m "merge-test"
           git checkout main
-          git merge feat/merge-test --no-ff -m 'merge-test'
+          git merge feat/merge-test --no-ff --commit --no-edit
 
           git log
           echo "-------------------"
