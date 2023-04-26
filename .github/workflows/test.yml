@@ -17,7 +17,6 @@ jobs:
           git status
           git diff
           ls -la .
-          git fetch --tags origin
           git tag -l
 
 ###########################################################################################
