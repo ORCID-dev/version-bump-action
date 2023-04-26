@@ -132,7 +132,7 @@ fi
 # Check for #major or #minor in commit message and increment the relevant version number
 
 latest_log=$(git log --format=%B -n 1 HEAD)
-merge_commit=$(echo "$latest_log" | head -n1)
+merge_commit=$(git log --merges -n 1)
 
 echo "latest_log:"
 echo "$latest_log"
