@@ -21,6 +21,7 @@ bump=${GHA_BUMP:-patch}
 major=0
 minor=0
 patch=0
+git_log_from=${GHA_GIT_LOG_FROM:-second_merge}
 
 #
 # functions
@@ -56,6 +57,8 @@ I_USAGE="
       -d | --do_tag       ) perform tagging of the repo
       -t | --tag          ) provide a tag
       -b | --bump         ) bump either none patch|minor|major or ($bump) using the a #minor #major git commit message default patch
+      -l | --git_log_from ) where from the git log history to look from when considering in #minor #major messages ($git_log_from)
+                            options are: numeric (number of lines) , last_tag , second_merge (github actions triggers after a merge)
 "
   echo "$I_USAGE"
   exit
@@ -78,6 +81,7 @@ do
       -d | --do_tag       ) do_tag=1 ;shift ;;
       -t | --tag       ) tag=$2 ;shift 2 ;;
       -b | --bump       ) bump=$2 ;shift 2 ;;
+      -l | --git_log_from ) git_log_from=$2 ;shift 2 ;;
       --) shift ; break ;;
       -*) echo "WARN: Unknown option (ignored): $1" >&2 ; shift ;;
       *)  break ;;
@@ -128,15 +132,31 @@ if [[ "$bump" = 'patch' ]];then
   patch=1
 fi
 
+re='^[0-9]+$'
+if [[ "$git_log_from" =~ $re ]];then
+  echo "line source selected of $git_log_from lines as source for commits_for_bump"
+  commits_for_bump=$(git log --oneline -n $git_log_from)
+fi
+
+if [[ "$git_log_from" = 'last_tag' ]];then
+  # NOTE: git fetch tags for 1000+ tags is very slow
+  echo "fetching tags to look for bump commits"
+  git fetch --tags origin
+  commits_for_bump=$(git log $version..HEAD --oneline)
+fi
+
+if [[ "$git_log_from" = 'second_merge' ]];then
+  second_merge_id=$(git log --merges --oneline --grep='^Merge' -n 2 | tail -n 1 | awk '{print $1}')
+  commits_for_bump=$(git log $second_merge_id..HEAD --oneline)
+fi
+
 # Allow git commit messages to override bump value
 # Check for #major or #minor in commit message and increment the relevant version number
 
-git fetch --tags origin
-commits_since_last_tag=$(git log $version..HEAD --oneline)
 merge_commit=$(git log --merges -n 1)
 
-echo "commits_since_last_tag:"
-echo "$commits_since_last_tag"
+echo "commits_for_bump:"
+echo "$commits_for_bump"
 echo " "
 echo "----------------------------------------------"
 echo " "
@@ -153,15 +173,15 @@ if grep -qE 'fix|bug|patch|test' <<< $(echo $merge_commit);then
   patch=1
 fi
 
-if grep -q '#major' <<< $(echo $commits_since_last_tag) ;then
+if grep -q '#major' <<< $(echo $commits_for_bump) ;then
   echo "major git commit detected"
   major=1
 fi
-if grep -q '#minor' <<< $(echo $commits_since_last_tag) ;then
+if grep -q '#minor' <<< $(echo $commits_for_bump) ;then
   echo "minor git commit detected"
   minor=1
 fi
-if grep -q '#patch' <<< $(echo $commits_since_last_tag) ;then
+if grep -q '#patch' <<< $(echo $commits_for_bump) ;then
   echo "patch git commit detected"
   patch=1
 fi
