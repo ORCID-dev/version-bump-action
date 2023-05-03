@@ -148,6 +148,7 @@ fi
 if [[ "$git_log_from" = 'second_merge' ]];then
   echo "looking for commits since the second_merge"
   second_merge_id=$(git log --merges --oneline --grep='^Merge' -n 2 | tail -n 1 | awk '{print $1}')
+  echo "git log $second_merge_id..HEAD --oneline"
   commits_for_bump=$(git log $second_merge_id..HEAD --oneline)
 fi
 
