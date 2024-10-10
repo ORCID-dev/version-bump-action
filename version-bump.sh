@@ -95,9 +95,12 @@ GITHUB_OUTPUT=${GITHUB_OUTPUT:-/tmp/$NAME.$USER}
 # main
 #
 #set -x
-
 echo "git -c 'versionsort.suffix=-' ls-remote --exit-code --refs --sort='version:refname' --tags origin '*.*.*' | grep \"$prefix_search_arg\" | tail -n1 | cut -d '/' -f 3"
-version=`git -c 'versionsort.suffix=-' ls-remote --exit-code --refs --sort='version:refname' --tags origin '*.*.*' | grep "$prefix_search_arg" | tail -n1 | cut -d '/' -f 3`
+
+if ! version=`git -c 'versionsort.suffix=-' ls-remote --exit-code --refs --sort='version:refname' --tags origin '*.*.*' | grep "$prefix_search_arg" | tail -n1 | cut -d '/' -f 3` ;then
+  version='v0.0.0'
+fi
+
 version_numeric="$(echo $version | tr -dc '[:digit:].')"
 echo "version: $version"
 echo "version_numeric: $version_numeric"
